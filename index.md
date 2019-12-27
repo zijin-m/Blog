@@ -1,3 +1,3 @@
-# Gitlab 相关
+# Gitlab
 
-### [CI 接入流程](/gitlab/ci.MD)
+### [介绍与集成](/gitlab/ci.MD)
