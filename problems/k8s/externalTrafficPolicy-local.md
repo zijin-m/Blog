@@ -68,7 +68,7 @@ $ curl http://example-com/.well-known/acme-challenge/Rjx7CiiA8GdIhXWRqa_s5XVswaH
 
 那么 `cert-manager` 为什么无法访问集群域名呢？原因在于集群域名对应的 `ip` 是 `LoadBalancer` 类型的 `svc` 的 `ip` ， 而 `svc` 对应的 `pod`（在 node1 上） 和 `cert-manager` 的 `pod`（在 node2 上） 不在一个 `node` 上，那么按照上面的理论，不会进行节点的转发，数据包被丢弃，请求自然失败。
 
-发什么什么:
+发生了什么：
 
 * node1 上的 pod 执行 curl http://example-com
 * dns 解析返回 `xx.xx.xx.xx`  ip 地址，注意这个 ip 地址被 `svc` 使用，认为是集群内部地址
