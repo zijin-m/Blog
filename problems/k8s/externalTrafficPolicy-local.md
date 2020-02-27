@@ -1,4 +1,6 @@
-# `pod` 无法访问集群 ingress slb 绑定的公网域名
+# pod 无法访问集群 ingress slb 绑定的公网域名
+
+`pod` 请求 `slb` 域名失败的问题总结文档。
 
 # 问题背景
 
