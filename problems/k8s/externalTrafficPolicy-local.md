@@ -9,7 +9,7 @@
 ```
 $ kubectl describe challenge example-com-2745722290-4391602865-0
 ...
-Waiting for http-01 challenge propagation: failed to perform self check GET request ‘http://example-com/.well-known/acme-challenge/Rjx7CiiA8GdIhXWRqa_s5XVswaHlD3y0XGMa1LJIIps’: Get http://example-com/.well-known/acme-challenge/Rjx7CiiA8GdIhXWRqa_s5XVswaHlD3y0XGMa1LJIIps: dial tcp 120.55.227.13:80: connect: connection refused
+Waiting for http-01 challenge propagation: failed to perform self check GET request ‘http://example-com/.well-known/acme-challenge/Rjx7CiiA8GdIhXWRqa_s5XVswaHlD3y0XGMa1LJIIps’: Get http://example-com/.well-known/acme-challenge/Rjx7CiiA8GdIhXWRqa_s5XVswaHlD3y0XGMa1LJIIps: dial tcp example-com:80: connect: connection refused
 ...
 ```
 
