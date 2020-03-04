@@ -283,7 +283,9 @@ spec:
 # HA 配置
 
 目前集群中 3 节点，设置 2 个镜像队列（包含 master ）来做高可用。
+```bash
 rabbitmqctl --erlang-cookie ${RABBITMQ_ERLANG_COOKIE} set_policy ha-exactly "^.*" '{"ha-mode":"exactly","ha-params":2,"ha-sync-mode":"automatic"}'
+```
 
 # 参考
 
