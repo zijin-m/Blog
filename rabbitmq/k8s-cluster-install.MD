@@ -286,5 +286,7 @@ spec:
 rabbitmqctl --erlang-cookie ${RABBITMQ_ERLANG_COOKIE} set_policy ha-exactly "^.*" '{"ha-mode":"exactly","ha-params":2,"ha-sync-mode":"automatic"}'
 
 # 参考
+
 • https://github.com/rabbitmq/rabbitmq-peer-discovery-k8s
+
 • https://zupzup.org/k8s-rabbitmq-cluster
