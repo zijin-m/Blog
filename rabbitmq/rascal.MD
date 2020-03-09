@@ -1,7 +1,7 @@
 # 连接断开自动重试
 
-rascal 内部通过 generic-pool 维护连接池，并使用 poolQueue （使用了 async queue ）维护需要的发送回调 (err, channel)，其内部调用 channel 的 publish 方法与 rabbitMQ 通信发送数据。
-使用自动重连的机制就是当由于网络，rabbitMQ 宕机等原因导致连接断开会被 handleConnectionError 捕获，代码如下
+`rascal` 内部通过 [generic-pool](https://github.com/coopernurse/node-pool#readme) 维护连接池，并使用 `poolQueue` （使用了 [async queue](https://caolan.github.io/async/v3/docs.html#queue) ）维护需要的发送回调 (err, channel)，其内部调用 `channel` 的 `publish` 方法与 `rabbitMQ` 通信发送数据。
+使用自动重连的机制就是当由于网络，`rabbitMQ` 宕机等原因导致连接断开会被 `handleConnectionError` 捕获，代码如下
 
 ```js
 // 绑定错误回调
@@ -230,4 +230,36 @@ subscribeNow 调用 channel.consume 和 rabbitMQ 建立 socket 连接，并将 _
       return setTimeout(handleChannelError.bind(null, session, config, null, attempts + 1, err), delay).unref();
     });
   }
+```
+
+# 消息 ACK
+
+肯定确认，用于消息正常处理或者因为幂等和其他原因忽略此消息的情况。
+
+```js
+aclOrNack() 
+```
+
+否定确认，消息会被删除。如果配置了死信队列，会被保存到死信队列。
+
+```js
+ackorNack(err) 
+```
+
+否定确认，要求在 defer 延迟后重发消息，消息会被重新放到队列前面。
+
+```js
+ackorNack(err, { strategy: "nack", requeue: true, defer: 5000 })
+```
+
+否定确认，要求在 defer 延迟后重发消息，消息会被放到队列后面，原理是复制此条消息然后重新发送，使用确认模式，发送完成后 ack 源消息。如果配置了 attempts ，则达到 attempts 次数后，消息会 nack , 等同 ackorNack(err)
+
+```js
+ackOrNack(err, { strategy: 'republish', defer: 1000, attempts: 10 })
+```
+
+否定确认，attempts 次数内尝试转发到指定的 publication，如果将该 publication 路由到延迟队列，延迟队列再配置死信 exchange，在消息超时后通过死信 exchange 路由重新到队列，功能和 republish 差不多，但是超时的状态和消息保存在额外队列中，不会因为应用重启等原因导致重启计时器。
+
+```js
+ackOrNack(err, { strategy: 'forward', publication: 'some_exchange' , attempts: 10 })
 ```
