@@ -1,3 +1,7 @@
+# 日记
+
+### 使用 xswitch 转发 *.googleusercontent.com 到 lh4.ggpht.com
+
 # RabbitMQ
 
 ### [集群模式部署](/rabbitmq/k8s-cluster-install.MD)
